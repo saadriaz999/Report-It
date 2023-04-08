@@ -17,7 +17,7 @@ userRouter.get('/logout', userController.logout);
 userRouter.get('/otp', userController.verify_otp)
 
 
-// google auth endpoint
+// google auth endpoints
 userRouter.get('/auth/google', userController.google_auth);
 userRouter.get('/auth/google/redirect', userController.google_auth_redirect, userController.googleAuthLogin)
 userRouter.post('/auth/google/register/:userId', userController.googleAuthRegister);
