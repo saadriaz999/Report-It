@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+    <h1>Dashboard</h1>
+    <br><br>
+
+    <form action="/complaint/post" method="GET">
+        <button type="submit" class="btn btn-dark">File Complaint</button>
+    </form>
+
+    <br>
+
+    <form action="/user/promote" method="GET">
+        <button type="submit" class="btn btn-dark">Promote User</button>
+    </form>
+
+    <br>
+
+    <form action="/user/logout" method="GET">
+        <button type="submit" class="btn btn-dark">Logout</button>
+    </form>
+
+</div>
+
+<%- include('partials/footer') %>

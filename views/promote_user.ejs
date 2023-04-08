@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>WebDevProject</title>
+    <style>
+        #map{
+            height: 200px;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap-social.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<div class="container mt-5">
+    <h1>Promote User</h1>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body">
+
+                    <!-- Makes POST request to /register route -->
+                    <form action="/user/promote" method="POST">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" name="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="area">Area</label>
+                            <input type="hidden" name="area" value="24.9324 67.0873">
+                            <div id="map"></div>
+                            <script>
+                                function initMap() {
+                                    let map = new google.maps.Map(document.getElementById("map"), {
+                                        center: {lat: 24.9324, lng: 67.0873},
+                                        zoom: 15,
+                                    })
+
+                                    let marker = new google.maps.Marker({
+                                        position: map.getCenter(),
+                                        map: map,
+                                        title: 'Marker'
+                                    });
+
+                                    google.maps.event.addListener(map, 'center_changed', function() {
+                                        let center = map.getCenter();
+                                        marker.setPosition(center);
+
+                                        document.getElementsByName('address')[0].value = center.lat() + ' ' + center.lng();
+                                        console.log(document.getElementsByName('address')[0].value);
+                                    });
+                                    //
+                                    // console.log(map.center.lat());
+                                }
+                            </script>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark">Promote</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <script async
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2RKvsT9DaJm_HrhTTykDGInPZffEiuqg&callback=initMap">
+        </script>
+    </div>
+</div>
+
+<%- include('partials/header') %>
