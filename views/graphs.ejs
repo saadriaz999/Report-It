@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <title>WebDevProject</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap-social.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.0.1/js/anychart-pie.min.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background: black">
+    <a class="navbar-brand" href="#" style="color: white">Report It</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/complaint/post" style="color: white">File Complaint<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/complaint/hotspots" style="color: white">Crime Map<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/complaint/graphs" style="color: white">Crime Data<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/user/promote" style="color: white">Promote User<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/user/logout" style="color: white">Logout<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1>Data</h1>
+
+    <div id="container" style="width: 1000px; height: 1000px"></div>
+    <script>
+        var dat = [
+            {x: "Murder", value: 0},
+            {x: "Harassment", value: 0},
+            {x: "Robbery", value: 0}
+        ]
+
+        anychart.onDocumentReady(function() {
+
+            fetch("http://localhost:9000/complaint/get")
+                .then(response => response.json()) // Parse the response as JSON
+                .then(data => {
+                    for (let i = 0; i < data.length; i++) {
+                        // Create a marker at the desired location
+                        const category = data[i].category;
+                        if (category === "murder") {
+                            dat[0].value += 1;
+                        } else if (category === "harassment") {
+                            dat[1].value += 1;
+                        } else {
+                            dat[2].value += 1;
+                        }
+                        console.log(dat);
+                    }
+
+                    // create the chart
+                    var chart = anychart.pie();
+
+                    // set the chart title
+                    chart.title("Percentage of Different Categories of Crimes");
+
+                    // add the data
+                    console.log(dat);
+                    chart.data(dat);
+
+                    // display the chart in the container
+                    chart.container('container');
+                    chart.draw();
+                })
+        });
+    </script>
+
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <script>
+        anychart.onDocumentReady(function() {
+            let dateStrings = []
+            fetch("http://localhost:9000/complaint/get")
+                .then(response => response.json()) // Parse the response as JSON
+                .then(data => {
+                    for (let i = 0; i < data.length; i++) {
+                        if (i % 3 === 0) {
+                            dateStrings.push("2022-04-01T06:00:00.000Z")
+                        } else {
+                            dateStrings.push("2023-04-01T03:00:00.000Z")
+                        }
+                    }
+                    console.log(dateStrings);
+
+                    // Convert the dates to hours
+                    let hours = dateStrings.map(dateString => {
+                        let date = new Date(dateString);
+                        return date.getUTCHours();
+                    });
+
+// Create an array to hold the frequency of each hour
+                    let histogram = new Array(24).fill(0);
+                    hours.forEach(hour => {
+                        histogram[hour]++;
+                    });
+
+// Create the histogram using Chart.js
+                    let ctx = document.getElementById('myChart').getContext('2d');
+                    let myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: Array.from({length: 24}, (_, i) => i + ':00'), // Labels for the x-axis
+                            datasets: [{
+                                label: '# of timestamps',
+                                data: histogram,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Color of the bars
+                                borderColor: 'rgba(75, 192, 192, 1)',  // Border color of the bars
+                                borderWidth: 1  // Border width of the bars
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                })
+        })
+
+    </script>
+
+</div>
+
+
+</body>
+</html>

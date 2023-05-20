@@ -123,6 +123,23 @@ const get_media_page = function(req, res) {
 }
 
 
+const get_crime_hotspot_page = function(req, res) {
+    if (req.isAuthenticated()) {
+        res.status(200).render("crime_hotspots.ejs");
+    } else {
+        res.status(400).redirect("/user/login");
+    }
+}
+
+const get_crime_graphs_page = function(req, res) {
+    if (req.isAuthenticated()) {
+        res.status(200).render("graphs.ejs");
+    } else {
+        res.status(400).redirect("/user/login");
+    }
+}
+
+
 module.exports = {
     get_complaints,
     get_complaint,
@@ -130,5 +147,7 @@ module.exports = {
     update_complaint,
     delete_complaint,
     get_complaint_page,
-    get_media_page
+    get_media_page,
+    get_crime_hotspot_page,
+    get_crime_graphs_page
 };

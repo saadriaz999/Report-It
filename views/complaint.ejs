@@ -17,6 +17,33 @@
 </head>
 
 <body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background: black">
+    <a class="navbar-brand" href="#" style="color: white">Report It</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/complaint/post" style="color: white">File Complaint<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/complaint/hotspots" style="color: white">Crime Map<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/complaint/graphs" style="color: white">Crime Data<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/user/promote" style="color: white">Promote User<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/user/logout" style="color: white">Logout<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
     <div class="container mt-5">
         <h1>File Complaint</h1>
 
@@ -88,4 +115,5 @@
         </div>
     </div>
 
-<%- include('partials/header') %>
+</body>
+</html>

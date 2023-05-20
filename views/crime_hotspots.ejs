@@ -6,8 +6,8 @@
     <title>WebDevProject</title>
     <style>
         #map{
-            height: 200px;
-            width: 100%;
+            height: 550px;
+            width: 1200px;
         }
     </style>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
@@ -44,62 +44,64 @@
     </div>
 </nav>
 
-<div class="container mt-5">
-    <h1>Promote User</h1>
-
-    <div class="row">
-        <div class="col-sm-8">
-            <div class="card">
-                <div class="card-body">
-
-                    <!-- Makes POST request to /register route -->
-                    <form action="/user/promote" method="POST">
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" name="username">
-                        </div>
-                        <div class="form-group">
-                            <label for="area">Area</label>
-                            <input type="hidden" name="area" value="24.9324 67.0873">
-                            <div id="map"></div>
-                            <script>
-                                function initMap() {
-                                    let map = new google.maps.Map(document.getElementById("map"), {
-                                        center: {lat: 24.9324, lng: 67.0873},
-                                        zoom: 15,
-                                    })
-
-                                    let marker = new google.maps.Marker({
-                                        position: map.getCenter(),
-                                        map: map,
-                                        title: 'Marker'
-                                    });
-
-                                    google.maps.event.addListener(map, 'center_changed', function() {
-                                        let center = map.getCenter();
-                                        marker.setPosition(center);
-
-                                        document.getElementsByName('address')[0].value = center.lat() + ' ' + center.lng();
-                                        console.log(document.getElementsByName('address')[0].value);
-                                    });
-                                    //
-                                    // console.log(map.center.lat());
-                                }
-                            </script>
-                        </div>
-
-                        <button type="submit" class="btn btn-dark">Promote</button>
-                    </form>
-                </div>
-            </div>
+        <div style="display: flex; justify-content: center; margin-top: 50px;">
+            <div id="map"></div>
         </div>
+
+        <script>
+            let map = null;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: {lat: 24.9324, lng: 67.0873},
+                    zoom: 15,
+                })
+
+                let marker = new google.maps.Marker({
+                    position: map.getCenter(),
+                    map: map,
+                    title: 'Marker'
+                });
+
+                // seeing current position of pointer
+                google.maps.event.addListener(map, 'center_changed', function() {
+                    let center = map.getCenter();
+                    marker.setPosition(center);
+
+                    document.getElementsByName('address')[0].value = center.lat() + ' ' + center.lng();
+                    console.log(document.getElementsByName('address')[0].value);
+                });
+                //
+                // console.log(map.center.lat());
+            }
+
+            // adding markers
+            fetch("http://localhost:9000/complaint/get")
+                .then(response => response.json()) // Parse the response as JSON
+                .then(data => {
+                    for (let i = 0; i < data.length; i++) {
+                        // Create a marker at the desired location
+                        const coordinates = data[i].address.split(" ");
+                        console.log(coordinates)
+                        const tempMarker = new google.maps.Marker({
+                            position: {lat: parseFloat(coordinates[0]), lng: parseFloat(coordinates[1])},
+                            map: map,
+                            title: "Red Spot",
+                            icon: {
+                                url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                                scaledSize: new google.maps.Size(32, 32),
+                            },
+                        });
+                    }
+                })
+
+        </script>
 
 
         <script async
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2RKvsT9DaJm_HrhTTykDGInPZffEiuqg&callback=initMap">
         </script>
-    </div>
-</div>
 
+        </div>
+    </div>
 </body>
 </html>

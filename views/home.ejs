@@ -1,25 +1,39 @@
-<%- include('partials/header') %>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="container mt-5">
-    <h1>Home</h1>
-    <br><br>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Complaint Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
 
-    <div>
-        <form action="/user/register" method="GET">
-            <button type="submit" class="btn btn-dark">Register</button>
-        </form>
+<body>
+<div class="container">
+    <div class="jumbotron mt-5">
+        <h1 class="display-4">Register Crime Complaints</h1>
+        <p class="lead">Welcome to our website aimed at reducing crime in Pakistan. We provide a platform for people to
+            register crime complaints and contribute towards a safer society.</p>
+        <hr class="my-4">
+        <p>Join us in our mission to combat crime and make a positive impact in your community.</p>
+        <a class="btn btn-primary btn-lg" href="/user/register" role="button">Register</a>
+        <a class="btn btn-primary btn-lg" href="/user/login" role="button">Login</a>
     </div>
-
-    <br>
-
-    <div>
-        <form action="/user/login" method="GET">
-            <button type="submit" class="btn btn-dark">Login</button>
-        </form>
+    <div class="text-center">
     </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+        integrity="sha384-Ky9Ho+YKJ/QSSWBx2wOpnEBYXa2VeG+hxYfoE2M6txKsmUZPiBL+0WlJ8B+VOoPo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
 
 
 </div>
 </div>
 
-<%- include('partials/footer') %>
+</body>
+</html>
