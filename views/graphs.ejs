@@ -44,7 +44,7 @@
 <div class="container mt-5">
     <h1>Data</h1>
 
-    <div id="container" style="width: 1000px; height: 1000px"></div>
+    <div id="container" style="width: 600px; height: 600px"></div>
     <script>
         var dat = [
             {x: "Murder", value: 0},
@@ -87,7 +87,8 @@
         });
     </script>
 
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <div style="width: 600px; height: 600px">
+    <canvas id="myChart" width="100px" height="100px"></canvas>
     <script>
         anychart.onDocumentReady(function() {
             let dateStrings = []
@@ -141,6 +142,7 @@
         })
 
     </script>
+    </div>
 
 </div>
 
